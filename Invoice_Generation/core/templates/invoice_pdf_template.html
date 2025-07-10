@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice #{{ invoice.id }}</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .invoice-box {
+      max-width: 800px;
+      margin: auto;
+      border: 1px solid #eee;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      margin: 0;
+      color: #007bff;
+    }
+
+    .header small {
+      color: #777;
+    }
+
+    .info {
+      margin-bottom: 20px;
+    }
+
+    .info p {
+      margin: 5px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    table thead {
+      background-color: #f8f9fa;
+    }
+
+    table th, table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #e9ecef;
+    }
+
+    .total-section {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .total-section p {
+      margin: 5px 0;
+      font-weight: bold;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .status.PAID {
+      background-color: #28a745;
+    }
+
+    .status.UNPAID {
+      background-color: #dc3545;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="invoice-box">
+    <div class="header">
+      <h1>Invoice #{{ invoice.id }}</h1>
+      <small>Thank you for your purchase!</small>
+    </div>
+
+    <div class="info">
+      <p><strong>Date Created:</strong> {{ invoice.date_create }}</p>
+      <p><strong>Due Date:</strong> {{ invoice.due_date }}</p>
+      <p><strong>Status:</strong>
+        <span class="status {{ invoice.status|upper }}">{{ invoice.status }}</span>
+      </p>
+    </div>
+
+    <h3>Items Purchased:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in invoice.invoices.all %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>Rs {{ item.unit_price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>Rs {{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="total-section">
+      <p>Subtotal: Rs {{ invoice.subtotal }}</p>
+      <p>Tax: Rs {{ invoice.tax }}</p>
+      <p>Total: Rs {{ invoice.total }}</p>
+    </div>
+  </div>
+</body>
+</html>

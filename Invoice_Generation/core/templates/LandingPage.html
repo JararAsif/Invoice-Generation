@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+
+{% block main_content %}
+<style>
+  .welcome-section {
+    height: 90vh;
+    background: linear-gradient(to right, #2A4759, #4C9F70);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .welcome-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .welcome-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .welcome-subtext {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+
+  .welcome-btn {
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    background-color: #ffffff;
+    color: #2A4759;
+    border: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+  }
+
+  .welcome-btn:hover {
+    background-color: #2A4759;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+  }
+</style>
+
+<section class="welcome-section">
+  <div class="welcome-box">
+    <h1 class="welcome-title">Welcome to the Invoice Management System</h1>
+    <p class="welcome-subtext">Simple. Efficient. Powerful. Start managing your invoices today.</p>
+    <a href="{% url 'login' %}" class="welcome-btn">Login</a>
+  </div>
+</section>
+{% endblock %}
