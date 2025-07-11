@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Homepage{% endblock title %}
+
+{% block main_content %}
+
+      
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <a class="navbar-brand" href="{% url 'adminHome' %}">InvoiceApp</a>
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'adminHome' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Handle User
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'AddCustomer' %}">Add Customer</a></li>
+            
+            <li><a class="dropdown-item" href="{% url 'ViewAllCustomer' %}">Remove Customer</a></li>
+
+            <li><a class="dropdown-item" href="{% url 'ViewAllCustomer' %}">View All Customer</a></li>
+          </ul>
+        </li>
+     <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'HandleProducts' %}">Handle Products</a>
+        </li>
+      </ul>
+        <form method="GET" class="d-flex" role="search">
+          <input class="form-control me-2 rounded-pill px-3"
+                type="search"
+                name="q"
+                placeholder="Search by name or email"
+                value="{{ query|default:'' }}"
+                aria-label="Search">
+          <button class="btn btn-outline-success me-4 rounded-pill px-4" type="submit">Search</button>
+        </form>
+    </div>
+  <div class="ms-auto d-flex gap-3">
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+  </div>
+</nav>
+
+{% if emp_data.has_other_pages %}
+<div class="d-flex justify-content-center mt-4">
+  <nav aria-label="Customer pagination">
+    <ul class="pagination pagination-lg shadow-sm rounded-pill px-4 py-2" style="background-color: #f0f4f8;">
+      
+      <!-- Previous Button -->
+      {% if emp_data.has_previous %}
+      <li class="page-item">
+        <a class="page-link text-primary fw-bold" href="?q={{ query }}&page={{ emp_data.previous_page_number }}" aria-label="Previous" style="border-radius: 50px;">
+          &laquo;
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link text-muted" style="border-radius: 50px;">&laquo;</span>
+      </li>
+      {% endif %}
+
+      <!-- Page Numbers -->
+      {% for num in emp_data.paginator.page_range %}
+      <li class="page-item {% if emp_data.number == num %}active{% endif %}">
+        <a class="page-link {% if emp_data.number == num %}bg-primary text-white{% else %}text-dark{% endif %}" 
+           href="?q={{ query }}&page={{ num }}" 
+           style="margin: 0 4px; border-radius: 50px; transition: 0.3s;">
+          {{ num }}
+        </a>
+      </li>
+      {% endfor %}
+
+      <!-- Next Button -->
+      {% if emp_data.has_next %}
+      <li class="page-item">
+        <a class="page-link text-primary fw-bold" href="?q={{ query }}&page={{ emp_data.next_page_number }}" aria-label="Next" style="border-radius: 50px;">
+          &raquo;
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <span class="page-link text-muted" style="border-radius: 50px;">&raquo;</span>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endif %}
+
+
+
+<section class="container d-flex flex-column align-items-center" style="height: 120vh;margin-top: 100px;">
+    <div class="table w-100">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in emp_data %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ x.name }}</td>
+                    <td>{{ x.email }}</td>
+                    <td>{{ x.address }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <form action="{% url 'DeleteCustomer' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ x.id }}">
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                            <a href="{% url 'UpdateStudent' x.id %}" class="btn btn-info ">Edit</a> 
+                        </div>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<style>
+  .pagination .page-link:hover {
+    background-color: #e3f2fd;
+    color: #0d6efd;
+    transform: scale(1.05);
+  }
+  .pagination .active .page-link {
+    background-color: #0d6efd !important;
+    color: white !important;
+    border-color: transparent;
+  }
+</style>
+
+
+{% endblock main_content %}

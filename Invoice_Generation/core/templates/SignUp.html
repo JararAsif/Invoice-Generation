@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup Page{% endblock title %}
+
+{% block main_content %}
+
+
+<div class="d-flex justify-content-center align-items-center" style="height: 90vh;">
+  <div class="col-sm-8">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      
+      <input type="submit" value="Submit" class="btn btn-primary custombtn1">
+    </form>
+  </div>
+</div>
+
+
+
+    </div>
+</section>
+{% endblock main_content%}

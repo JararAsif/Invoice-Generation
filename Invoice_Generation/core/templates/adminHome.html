@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock title %}
+
+{% block main_content %}
+<style>
+  .admin-header {
+    background: linear-gradient(to right, #2A4759, #4C9F70);
+    color: white;
+    padding: 40px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+
+  .admin-welcome h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .admin-section .card {
+    border: none;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 1rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+
+  .admin-section .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .admin-section .card i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    margin-top: 40px;
+    font-weight: 600;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold" href="#">InvoiceApp</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'adminHome' %}">Home</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          Handle User
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'AddCustomer' %}">Add Customer</a></li>
+          <li><a class="dropdown-item" href="{% url 'ViewAllCustomer' %}">Remove Customer</a></li>
+          <li><a class="dropdown-item" href="{% url 'ViewAllCustomer' %}">View All Customer</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'HandleProducts' %}">Handle Products</a>
+      </li>
+    </ul>
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search">
+      <button class="btn btn-outline-success me-4" type="submit">Search</button>
+    </form>
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="admin-header text-center admin-welcome mt-5">
+    <h2>Welcome, {{ request.user.name }}</h2>
+    <p class="lead">Manage your customers, products, and monitor invoice activities efficiently.</p>
+  </div>
+
+  <h4 class="section-title">Quick Actions</h4>
+  <div class="row admin-section mt-4">
+    <div class="col-md-4">
+      <div class="card text-center p-4">
+        <i class="bi bi-person-plus text-primary"></i>
+        <h5 class="card-title">Add Customer</h5>
+        <a href="{% url 'AddCustomer' %}" class="btn btn-outline-primary mt-2">Go</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-center p-4">
+        <i class="bi bi-people text-success"></i>
+        <h5 class="card-title">View All Customers</h5>
+        <a href="{% url 'ViewAllCustomer' %}" class="btn btn-outline-success mt-2">Go</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-center p-4">
+        <i class="bi bi-box-seam text-warning"></i>
+        <h5 class="card-title">Handle Products</h5>
+        <a href="{% url 'HandleProducts' %}" class="btn btn-outline-warning mt-2">Go</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Previous Invoices{% endblock title %}
+
+
+{% block main_content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">InvoiceApp</a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'PrevInvoices' %}">Invoices</a>
+        </li>
+      </ul>
+  <div class="ms-auto d-flex gap-3">
+    <a href="{% url 'cart' %}" class="btn btn-outline-light">🛒 Cart</a>
+    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Previous Invoices</h2>
+
+  {% if invoices %}
+    {% for invoice in invoices %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-success text-white d-flex justify-content-between">
+          <span><strong>Invoice #{{ invoice.id }}</strong></span>
+          <span>Created: {{ invoice.date_create }}</span>
+          <span>Due: {{ invoice.due_date }}</span>
+        </div>
+        <div class="card-body">
+          <p><strong>Status:</strong> {{ invoice.status }}</p>
+          <p><strong>Subtotal:</strong> Rs {{ invoice.subtotal }}</p>
+          <p><strong>Tax:</strong> Rs {{ invoice.tax }}</p>
+          <p><strong>Total:</strong> Rs {{ invoice.total }}</p>
+
+          <hr>
+          <h5>Items:</h5>
+          {% if invoice.invoices.all %}
+            <ul class="list-group">
+              {% for item in invoice.invoices.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{{ item.product.name }}</strong> — {{ item.quantity }} x Rs {{ item.unit_price }}
+                  </div>
+                  <span class="badge bg-primary rounded-pill">Rs {{ item.total_price }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No items in this invoice.</p>
+          {% endif %}
+          <a href="{% url 'DownloadInvoice' invoice.id %}" class="btn btn-outline-primary mt-3">
+            📥 Download Invoice
+        </a>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info text-center">
+      No previous invoices found.
+    </div>
+  {% endif %}
+</div>
+{% endblock main_content %}
