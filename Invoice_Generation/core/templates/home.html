@@ -59,7 +59,11 @@
       <!-- Previous Button -->
       {% if products.has_previous %}
       <li class="page-item">
+<<<<<<< HEAD
         <a class="page-link text-primary fw-bold" href="?q={{ query }}&page={{ products.previous_page_number }}" aria-label="Previous" style="border-radius: 50px;">
+=======
+        <a class="page-link text-primary fw-bold" href="?page={{ products.previous_page_number }}" aria-label="Previous" style="border-radius: 50px;">
+>>>>>>> c0f5aba07ce92e2e9b4b4efffc084af2ac537f17
           &laquo;
         </a>
       </li>
@@ -73,7 +77,11 @@
       {% for page_num in products.paginator.page_range %}
       <li class="page-item {% if page_num == products.number %}active{% endif %}">
         <a class="page-link {% if page_num == products.number %}bg-primary text-white{% else %}text-dark{% endif %}"
+<<<<<<< HEAD
            href="?q={{ query }}&page={{ page_num }}"
+=======
+           href="?page={{ page_num }}"
+>>>>>>> c0f5aba07ce92e2e9b4b4efffc084af2ac537f17
            style="margin: 0 4px; border-radius: 50px; transition: 0.3s;">
           {{ page_num }}
         </a>
@@ -83,7 +91,11 @@
       <!-- Next Button -->
       {% if products.has_next %}
       <li class="page-item">
+<<<<<<< HEAD
         <a class="page-link text-primary fw-bold" href="?q={{ query }}&page={{ products.next_page_number }}" aria-label="Next" style="border-radius: 50px;">
+=======
+        <a class="page-link text-primary fw-bold" href="?page={{ products.next_page_number }}" aria-label="Next" style="border-radius: 50px;">
+>>>>>>> c0f5aba07ce92e2e9b4b4efffc084af2ac537f17
           &raquo;
         </a>
       </li>
@@ -100,7 +112,10 @@
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c0f5aba07ce92e2e9b4b4efffc084af2ac537f17
   <div class="row justify-content-center">
     {% for product in products %}
     <div class="col-md-4 mb-4"> <!-- Only 3 per row on medium and up -->
@@ -195,6 +210,7 @@
     color: white !important;
     border-color: transparent;
   }
+<<<<<<< HEAD
   .navbar .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
@@ -208,5 +224,7 @@
   background-color: #dc3545;
   color: #fff;
 }
+=======
+>>>>>>> c0f5aba07ce92e2e9b4b4efffc084af2ac537f17
 </style>
 {% endblock main_content %}
